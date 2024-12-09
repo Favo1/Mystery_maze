@@ -1,0 +1,18 @@
+﻿  Source.cpp
+C:\Users\goluw\Documents\GitHub\Maze V1\Maze V1\Source.cpp(99,63): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Maze V1\Maze V1\Source.cpp(99,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Maze V1\Maze V1\Source.cpp(104,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\goluw\Documents\GitHub\Maze V1\Maze V1\Source.cpp(105,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\goluw\Documents\GitHub\Maze V1\Maze V1\Source.cpp(111,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\goluw\Documents\GitHub\Maze V1\Maze V1\Source.cpp(112,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\goluw\Documents\GitHub\Maze V1\Maze V1\Source.cpp(199,27): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Users\goluw\Documents\GitHub\Maze V1\Maze V1\Source.cpp(199,27): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\goluw\Documents\GitHub\Maze V1\Maze V1\Source.cpp(199,41): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Users\goluw\Documents\GitHub\Maze V1\Maze V1\Source.cpp(199,41): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\goluw\Documents\GitHub\Maze V1\Maze V1\Source.cpp(199,53): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Users\goluw\Documents\GitHub\Maze V1\Maze V1\Source.cpp(199,53): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\goluw\Documents\GitHub\Maze V1\Maze V1\Source.cpp(199,63): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Users\goluw\Documents\GitHub\Maze V1\Maze V1\Source.cpp(199,63): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\goluw\Documents\GitHub\Maze V1\Maze V1\Source.cpp(29,1): warning C4715: 'ElementInDeque': not all control paths return a value
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Maze V1.vcxproj -> C:\Users\goluw\Documents\GitHub\Maze V1\x64\Debug\Maze V1.exe
