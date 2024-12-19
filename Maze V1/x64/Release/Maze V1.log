@@ -1,0 +1,20 @@
+﻿  Source.cpp
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(110,23): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(150,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(151,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(155,24): warning C4244: 'argument': conversion from 'float' to 'const unsigned __int64', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(155,35): warning C4244: 'argument': conversion from 'float' to 'unsigned __int64', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(188,71): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(188,34): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(189,69): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(189,34): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(218,69): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(218,37): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(223,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(224,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Generating code
+  34 of 518 functions ( 6.6%) were compiled, the rest were copied from previous compilation.
+    10 functions were new in current compilation
+    22 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Maze V1.vcxproj -> C:\Users\goluw\Documents\GitHub\Mystery_maze\x64\Release\Maze V1.exe

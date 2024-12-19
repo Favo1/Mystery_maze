@@ -1,4 +1,4 @@
-// MR F E GABRIEL-OLUWATOBI
+/*MR F E GABRIEL - OLUWATOBI*/
 #include <iostream>
 #include <raylib.h>
 #include <deque>
@@ -54,6 +54,7 @@ class Snake
 public:
     deque<Vector2> body = { Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9} };
     Vector2 direction = { 1, 0 };
+    Vector2 checkpoint = {0,0}; //Default checkpoint (starting position)
     bool addSegment = false;
 
     void Draw()
@@ -63,7 +64,7 @@ public:
             float x = body[i].x;
             float y = body[i].y;
             Rectangle segment = { offset + x * cellSize, offset + y * cellSize, (float)cellSize, (float)cellSize };
-            DrawRectangleRounded(segment, 0.5, 6, darkGreen);
+            DrawRectangleRounded(segment, 0.5, 6, BLACK);
         }
     }
 
@@ -91,8 +92,8 @@ class Maze
         vector<vector<bool>> grid; //2D grid to store wall (true = wall, fasle = free)
 
         //Set start & end destinations for maze
-        Vector2 startPosition = { 0, 0 };
-        Vector2 endPosition = { (float)(cellCount - 1), (float)(cellCount - 1) }; //Bottom-right corner;
+        Vector2 startPosition = { 0, 0 }; // Top-Left corner
+        Vector2 endPosition = { (float)(cellCount - 1), (float)(cellCount - 1) }; //Bottom-right corner
         Maze() { grid.resize(cellCount, vector<bool>(cellCount, true)); }
 
         void Generate()
@@ -116,7 +117,7 @@ class Maze
                         (float)offset + x * cellSize,
                         (float)offset + y * cellSize,
                         (float)cellSize,
-                        (float)cellSize,
+                        (float)cellSize
                             });
                         cout << "Added wall at: (" << x << ", " << y << ")" << endl;
                     }
@@ -161,7 +162,7 @@ class Maze
             
         }
 
-        bool IsWall( Vector2 pos)
+        bool IsWall( Vector2 pos) const
         {
             return grid[(int)pos.y][(int)pos.x];
         }
@@ -236,14 +237,21 @@ public:
     vector<Food> foods;
     Food food;
     Maze maze;
-    bool running = true;
-    int score = 0;
+    
     Sound eatSound;
     Sound wallSound;
     Sound uiSound;
     Sound menuSound;
+    Sound gameOverSound;
+    bool running = true;
+    int score = 0;
+    int currentScore = score;
+    float timer = 60.0f;
+    float timeLimit = timer;
+    bool timerActive = true;
+    bool isLevelComplete = false;
+   
     //Multiple foods function
-
      void InitializeFoods(int foodCount)
      {
          foods.clear();
@@ -260,23 +268,28 @@ public:
         uiSound = LoadSound("Sounds/UI_Select.wav");
         eatSound = LoadSound("Sounds/eat.wav");
         wallSound = LoadSound("Sounds/spring.wav");
+        gameOverSound = LoadSound("Sounds/weird.wav");
         
         maze.Generate();
         InitializeFoods(3);
     }
 
     ~Game()
-    {
-        UnloadSound(menuSound);
-        UnloadSound(uiSound);
-        UnloadSound(eatSound);
-        UnloadSound(wallSound);
-        CloseAudioDevice();
-        
+    {   
+        UnloadTexture(food.texture);
         for(const auto& food : foods)
         {
             UnloadTexture(food.texture);
         }
+
+        UnloadSound(menuSound);
+        UnloadSound(uiSound);
+        UnloadSound(eatSound);
+        UnloadSound(wallSound);
+        UnloadSound(gameOverSound);
+        CloseAudioDevice();
+        
+        
     }
 
     void Draw()
@@ -298,6 +311,51 @@ public:
         }
     }
 
+    void UpdateTimer(float deltaTime)
+    {
+        if (timer > 0 && !isLevelComplete)
+        {
+            timer -= deltaTime; //Subtract time passed
+            if(timer < 0) timer = 0; //Prevent negative timer
+            if (timer == 0) timerActive = false;
+        }
+    }
+
+    void CheckLevelCompletion(Vector2 snakePosition, Vector2 startPosition) {
+        if (CheckCollisionPointRec(snakePosition, Rectangle{ maze.endPosition.x, maze.endPosition.y, 20, 20 })) {
+            isLevelComplete = true;
+        }
+    }
+
+    void DrawTimer()
+    {
+        int timerWidth = 200; //Widht of the timer bar
+        int timerHeight = 20; //Height of the timer bar
+        int timerX = screenWidth / 2 - timerWidth / 2; // Centered horizontally
+        int timerY = 10; //position near the top of the screen
+
+        // Claculate the percentage of the time remaining
+        float timeRatio = timer / timeLimit;
+        int currentWidth = (int)(timeRatio * timerWidth);
+
+        //Draw the background bar (full width)
+        DrawRectangle(timerX, timerY, timerWidth, timerHeight, GRAY);
+
+        //Draw the timer bar based on remainig time
+        DrawRectangle(timerX, timerY, currentWidth, timerHeight, RED);
+
+        //Display the time remaining as text
+        DrawText(TextFormat("Time: %.1f", timer), timerX + timerWidth / 2 - 10, timerY + 20, 20, BLACK);
+        /*DrawText(TextFormat("Time: %.1f", game.timer), offset + cellSize * cellCount - 150, offset -40, 30, RED);*/
+        
+    }
+
+    void DrawCompletionMessage() {
+        if (isLevelComplete) {
+            DrawText("LEVEL COMPLETE!", screenWidth / 2 - 150, screenHeight / 2, 30, GREEN);
+        }
+    }
+
     void CheckCollisionWithFood()
     {
         if (Vector2Equals(snake.body[0], food.position))
@@ -306,6 +364,9 @@ public:
             snake.addSegment = true;
             score ++;
             PlaySound(eatSound);
+
+            //Set checkpoint to current head position
+            snake.checkpoint = snake.body[0];
         }
     }
 
@@ -340,10 +401,12 @@ public:
 
     void GameOver()
     {
-        snake.Reset();
+        /*snake.Reset();*/
+        snake.body = { snake.checkpoint, Vector2Add(snake.checkpoint, Vector2{ 0, 0}), Vector2Add(snake.checkpoint, Vector2{0,0}) };
+        snake.direction;
         food.position = food.GenerateRandomPos(snake.body, maze);
 		running = false;
-        score = 0;
+        currentScore = currentScore;
         PlaySound(wallSound);
 	}
 
@@ -351,18 +414,27 @@ public:
 
 	void gameMenu()
 	{
-		enum MenuOption { START, EXIT, NUM_OPTIONS };
-		const char* menuOptions[NUM_OPTIONS] = { "Start Game", "Exit" };
+		enum MenuOption { START, DIFFICULTY, EXIT, NUM_OPTIONS };
+		const char* menuOptions[NUM_OPTIONS] = { "Start Game", "Difficulty", "Exit"};
+        const char* difficulties[3] = { "Easy", "Medium", "Hard" };
+        int difficulty = 1; //Default: Medium (1=Easy, 2=Medium, 3=Hard)
 		int selectedOption = 0;
         float menuVolume = 0.5f; // Initial volume (50%)
         float uiVolume = 0.5f;
-
+        
+        
+        
+        //Menu sounds
         PlaySound(menuSound);
         SetSoundVolume(menuSound, menuVolume);
-        SetSoundVolume(uiSound, uiVolume);
 		while (!WindowShouldClose()) {
-			// Menu controls
+			
+            // Ensure the menu song loops
+            if (!IsSoundPlaying(menuSound)) {
+                PlaySound(menuSound);
+           }
             
+            // Menu controls
             if (IsKeyPressed(KEY_ESCAPE)) {
                 CloseWindow();
                 exit(0);//exit the program 
@@ -375,6 +447,23 @@ public:
 				selectedOption = (selectedOption - 1 + NUM_OPTIONS) % NUM_OPTIONS; // Move up
                 PlaySound(uiSound);
 			}
+            
+            if (selectedOption == DIFFICULTY) {
+               
+            if (IsKeyPressed(KEY_ENTER)) {
+                difficulty = (difficulty + 1) % 3; //Cycle through difficulties
+                PlaySound(uiSound);
+            }
+            //Adjust the settings based on difficulty
+            switch (difficulty)
+            {
+                case 0: timer = 120.0f; cellCount = 15; break;
+                case 1: timer = 60.0f; cellCount = 25; break;
+                case 2: timer = 30.0f; cellCount = 35; break;
+                default: 1;
+            }
+
+            }
             if (IsKeyPressed(KEY_LEFT)) {
                 menuVolume -= 0.1f; // Decrease volume
                 if (menuVolume < 0.0f) menuVolume = 0.0f;
@@ -407,6 +496,7 @@ public:
 			ClearBackground(darkgray);
 			DrawText("Main Menu", screenWidth / 2 - MeasureText("Main Menu", 40) / 2, 50, 60, BLACK);
 
+
 			for (int i = 0; i < NUM_OPTIONS; i++) {
                 
 				Color color = (i == selectedOption) ? RED : BLACK; // Highlight selected option
@@ -415,6 +505,11 @@ public:
             // Display volume
             DrawText("Volume:", screenWidth / 2 - 100, 300, 30, BLACK);
             DrawText(TextFormat("%i%%", (int)(menuVolume * 100)), screenWidth / 2 + 50, 300, 30, RED);
+
+            // Display difficulty
+            /*DrawText("Difficulty:", screenWidth / 2 - 100, 500, 50, BLACK);*/
+            DrawText(difficulties[difficulty], screenWidth / 2 - /*MeasureText(difficulties[difficulty],*/ 30, 400, 40, RED);
+           
 			EndDrawing();
 		}
 	}
@@ -438,7 +533,7 @@ public:
 		{
 			
 			BeginDrawing();
-			
+            game.DrawTimer();
 			if (eventTriggered(0.2, lastUpdateTime))
 			{
 				game.Update();
@@ -465,6 +560,9 @@ public:
 				game.snake.direction = { 1, 0 };
 				game.running = true;
 			}
+
+ 
+
 			//Drawing the classes
 			ClearBackground(green);
 
@@ -472,6 +570,7 @@ public:
 			DrawRectangleLinesEx(Rectangle{ (float)offset - 5, (float)offset - 5, (float)cellSize * cellCount + 10, (float)cellSize * cellCount + 10 }, 5, darkGreen);
             DrawText("Mystery Maze", offset - 5, 20, 40, darkGreen);
             DrawText(TextFormat("%i", game.score), offset - 5, offset + cellSize * cellCount + 10, 40, darkGreen);
+            /*DrawText(TextFormat("Time: %.1f", game.timer), offset + cellSize * cellCount - 150, offset -40, 30, RED);*/
             game.Draw();
 
 			EndDrawing();
