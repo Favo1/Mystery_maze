@@ -332,7 +332,7 @@ public:
 
         //Game sounds
         menuSound = LoadSound("Sounds/mini1111.wav");
-        uiSound = LoadSound("Sounds/UI_Select.wav");
+        uiSound = LoadSound("Sounds/ui_select.wav");
         eatSound = LoadSound("Sounds/eat.wav");
         wallSound = LoadSound("Sounds/spring.wav");
         gameOverSound = LoadSound("Sounds/weird.wav");
@@ -430,7 +430,10 @@ public:
     void CheckLevelCompletion() {
 
         if (Vector2Equals(snake.body[0], maze.endPosition)) {
+            running = false;
             isLevelComplete = true; // Mark the level as complete
+            PlaySound(completeSound);
+            
         }
     }
 
@@ -443,9 +446,15 @@ public:
 
     void DrawTimer()
     {
-        int timerWidth = 200; //Widht of the timer bar
-        int timerHeight = 20; //Height of the timer bar
-        int timerX = screenWidth - timerWidth - 20; // Centered horizontally
+        int baseTimerWidth = 200;
+        int baseTimerHeight = 20;
+
+        // Adjust timer dimensions based on difficulty
+        int timerWidth = baseTimerWidth - (difficulty * 50); //Widht of the timer bar
+        int timerHeight = baseTimerHeight; //Height of the timer bar
+
+
+        int timerX = screenWidth - timerWidth - timerWidth - 20; // Centered horizontally
         int timerY = 10; //position near the top of the screen
 
         // Claculate the percentage of the time remaining
@@ -548,7 +557,7 @@ public:
         enum MenuOption { START, DIFFICULTY, EXIT, NUM_OPTIONS };
         const char* menuOptions[NUM_OPTIONS] = { "Start Game", "Difficulty", "Exit" };
         const char* difficulties[3] = { "Easy", "Medium", "Hard" };
-        int difficulty = 1; // Default: Medium (0=Easy, 1=Medium, 2=Hard)
+        int difficulty = 0; // Default: Easy (0=Easy, 1=Medium, 2=Hard)
         int selectedOption = 0;
         float menuVolume = 0.5f; // Initial volume (50%)
 
@@ -639,9 +648,7 @@ public:
             InitializeFoods(7);
             break;
         default:
-            timer = 60.0f;
-            cellCount = 25;
-            InitializeFoods(5);
+            0;
             break;
         }
         maze = Maze();
@@ -728,9 +735,7 @@ int main()
         DrawText("Mystery Maze", offset - 5, 20, 40, darkGreen);
         DrawText(TextFormat("%i", game.score), offset - 5, offset + cellSize * cellCount + 10, 40, darkGreen);
         DrawText(TextFormat("Level: %d", game.level), offset + 610, offset + cellSize * cellCount + 10, 40, darkGreen);
-        /*DrawText(TextFormat("Time: %.1f", game.timer), offset + cellSize * cellCount - 150, offset -40, 30, RED);*/
         game.Draw();
-        /*game.InitializeFoods(3);*/
 
         EndDrawing();
     }
