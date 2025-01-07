@@ -1,19 +1,21 @@
-﻿  Source.cpp
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(105,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(145,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(146,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(150,24): warning C4244: 'argument': conversion from 'float' to 'const unsigned __int64', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(150,35): warning C4244: 'argument': conversion from 'float' to 'unsigned __int64', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(171,67): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(171,30): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(172,65): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(172,30): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(198,69): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(198,37): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(203,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(204,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(260,69): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(260,37): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(265,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(266,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  Maze V1.vcxproj -> C:\Users\goluw\Documents\GitHub\Mystery_maze\x64\Debug\Maze V1.exe
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Maze V1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Source.cpp
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(109,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(149,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(150,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(154,24): warning C4244: 'argument': conversion from 'float' to 'const unsigned __int64', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(154,35): warning C4244: 'argument': conversion from 'float' to 'unsigned __int64', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(175,67): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(175,30): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(176,65): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(176,30): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(250,69): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(250,37): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(255,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(256,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(312,69): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(312,37): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(317,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(318,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Maze V1.vcxproj -> C:\Users\goluw\Documents\GitHub\Mystery_maze\x64\Debug\MysteryMaze.exe

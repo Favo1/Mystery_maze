@@ -6,6 +6,7 @@
 #include <ctime>
 #include <algorithm>
 #include <random>
+#include <cmath>
 using namespace std;
 
 Color green = { 173, 204, 96 , 255 };
@@ -17,6 +18,9 @@ Color darkgray = { 80, 80, 80, 255 };
 int cellSize = 30;
 int cellCount = 25;
 int offset = 75;
+
+//double lastUpdateTime = 0;
+//double enemyUpdateTime = 0;
 
 // Maze variables
 #define CELL_SIZE 25;
@@ -173,6 +177,54 @@ public:
     }
 };
 
+// Timer powerup
+class TimerPowerup
+{
+public:
+    Vector2 position;
+    bool active;
+
+    TimerPowerup(const vector<vector<bool>>& grid, const deque<Vector2>& snakeBody)
+    {
+        position = GenerateRandomPosition(grid, snakeBody);
+        active = true;
+    }
+
+    Vector2 GenerateRandomPosition(const vector<vector<bool>>& grid, const deque<Vector2>& snakeBody)
+    {
+        random_device rd;
+        mt19937 gen(rd());
+        uniform_int_distribution<> dist(0, cellCount - 1);
+
+        Vector2 pos;
+        bool valid = false;
+
+        while (!valid)
+        {
+            pos = { static_cast<float>(dist(gen)), static_cast<float>(dist(gen)) };
+            if (!ElementInDeque(pos, snakeBody) && !grid[(int)pos.y][(int)pos.x]) // Ensure not in wall
+            {
+                valid = true;
+            }
+        }
+        return pos;
+    }
+
+    void Draw()
+    {
+        if (active)
+        {
+            Rectangle rect = { offset + position.x * cellSize, offset + position.y * cellSize, (float)cellSize, (float)cellSize };
+            DrawRectangleRec(rect, BLUE);
+        }
+    }
+
+    void Deactivate()
+    {
+        active = false;
+    }
+};
+
 // Food class
 class Food
 {
@@ -304,6 +356,7 @@ public:
     Maze maze;
     vector<Key> keys;
     Key key;
+    vector<TimerPowerup> timerPowerups; // Vector to store multiple timer power-ups
 
     Sound eatSound;
     Sound wallSound;
@@ -315,6 +368,7 @@ public:
     bool running = true;
     int difficulty;
     int level = 1;
+    int lives = 5;
     int score = 0;
     int currentScore = score;
     float timer = 60.f;
@@ -340,16 +394,12 @@ public:
 
         //Classes Methods
         maze.Generate();
+        InitializeTimerPowerups(3); // Initialize with 3 timer power-ups
     }
 
     ~Game()
     {
         UnloadTexture(food.texture);
-        for (const auto& food : foods)
-        {
-            UnloadTexture(food.texture);
-        }
-
         UnloadSound(menuSound);
         UnloadSound(uiSound);
         UnloadSound(eatSound);
@@ -357,31 +407,19 @@ public:
         UnloadSound(gameOverSound);
         UnloadSound(completeSound);
         CloseAudioDevice();
+       
     }
 
-    //Multiple foods function
-    void InitializeFoods(int foodCount)
-    {
-        foods.clear();
-        for (int i = 0; i < foodCount; i++)
-        {
-            Food newFood(snake.body, maze);
-            newFood.position = newFood.GenerateRandomPos(snake.body, maze, foods);
-            foods.push_back(newFood);
-            cout << "Food " << i << " generated at position: (" << newFood.position.x << ", " << newFood.position.y << ")" << endl;
-        }
-    }
-
+    
     //New level
     void StartNewLevel()
     {
         level++;
         timer = timeLimit;        // Reset timer
         maze.Generate();          // Generate a new maze
-        InitializeFoods(level + 3); // Add more food with higher levels
         snake.Reset();            // Reset snake position
-        food.position = food.GenerateRandomPos(snake.body, maze, foods);
-        key.position = key.GenerateRandomPos(snake.body, maze, keys);
+        food.position = food.GenerateRandomPos(snake.body, maze, foods); // initialize food position
+        key.position = key.GenerateRandomPos(snake.body, maze, keys); // initialize key position
     }
 
     void Draw()
@@ -393,6 +431,16 @@ public:
         DrawCompletionMessage();
         DrawOverMessage();
         DrawTimer();
+        DrawLives();
+        DrawLevel();
+
+        for (auto& powerup : timerPowerups)
+        {
+            if (powerup.active)
+            {
+                powerup.Draw();
+            }
+        }
     }
 
     void Update()
@@ -404,8 +452,16 @@ public:
             CheckCollisionWithEdges();
             CheckCollisionWithTail();
             CheckCollisionWithKey();
+            CheckCollisionWithTimerPowerups();
         }
 
+        //Enemy Collision = --lives
+        if(lives <= 0)
+        {
+            lives = 0;
+            DrawOverMessage();
+        }
+            
         //Handle level completion
         if (isLevelComplete)
         {
@@ -444,6 +500,16 @@ public:
         }
     }
 
+    void InitializeTimerPowerups(int count)
+    {
+        timerPowerups.clear();
+        for (int i = 0; i < count; ++i)
+        {
+            timerPowerups.emplace_back(maze.grid, snake.body);
+        }
+    }
+
+    //Draw remaining time
     void DrawTimer()
     {
         int baseTimerWidth = 200;
@@ -472,12 +538,23 @@ public:
             timerX + timerWidth / 2 - 40, timerY + 25, 20, BLACK);
 
     }
-
     //Draw completion message
     void DrawCompletionMessage() {
         if (isLevelComplete) {
-            DrawText("LEVEL COMPLETE!", screenWidth / 2 - 150, screenHeight / 2, 80, GREEN);
-            PlaySound(completeSound);
+            // Use a static font size for testing
+            int fontSize = 40;
+
+            // Calculate the position to center the text
+            int textWidth = MeasureText("LEVEL COMPLETE!", fontSize);
+            int textX = (screenWidth - textWidth) / 2;
+            int textY = screenHeight / 2 - fontSize / 2;
+
+            // Debugging: Print the calculated values
+            cout << "Font Size: " << fontSize << endl;
+            cout << "Text Position: (" << textX << ", " << textY << ")" << endl;
+
+            // Draw the text with the static font size
+            DrawText("LEVEL COMPLETE!", textX, textY, fontSize, GREEN);
         }
     }
     //Draw game over message
@@ -488,7 +565,30 @@ public:
             StopSound(gameOverSound);
         }
     }
+    //Draw remainig lives
+    void DrawLives()
+    {
+        // Calculate the position for the level text based on the current window size
+        int windowWidth = 2 * offset + cellSize * cellCount;
+        int timerTextX = windowWidth - 410; // Adjust this value to position the text correctly
+        int levelTextY = offset + cellSize * cellCount + 10;
 
+        //Draw the level text
+        DrawText(TextFormat("Lives: %d", lives), timerTextX, levelTextY, 40, darkGreen);
+    }
+    //Draw current level
+    void DrawLevel()
+    {
+        // Calculate the position for the level text based on the current window size
+        int windowWidth = 2 * offset + cellSize * cellCount;
+        int levelTextX = windowWidth - 210; // Adjust this value to position the text correctly
+        int levelTextY = offset + cellSize * cellCount + 10;
+
+        // Draw the level text
+        DrawText(TextFormat("Level: %d", level), levelTextX, levelTextY, 40, darkGreen);
+    }
+
+    //Collisons check
     void CheckCollisionWithFood()
     {
         if (Vector2Equals(snake.body[0], food.position))
@@ -542,11 +642,24 @@ public:
         }
     }
 
+    void CheckCollisionWithTimerPowerups()
+    {
+        for (auto& powerup : timerPowerups)
+        {
+            if (powerup.active && Vector2Equals(snake.body[0], powerup.position))
+            {
+                powerup.GenerateRandomPosition(maze.grid, snake.body);
+                timer += 10.0f; // Increase the timer by 10 seconds
+                powerup.Deactivate();
+                PlaySound(eatSound); 
+            }
+        }
+    }
+
     void GameOver()
     {
-        snake.Reset();
         snake.body = { snake.checkpoint, Vector2Add(snake.checkpoint, Vector2{ 0, 0}), Vector2Add(snake.checkpoint, Vector2{0,0}) };
-        snake.direction;
+        snake.direction = {0,0};
         running = false;
         currentScore = currentScore;
         PlaySound(wallSound);
@@ -635,20 +748,21 @@ public:
         case 0: // Easy
             timer = 40.0f;
             cellCount = 15;
-            InitializeFoods(3);
+            /*InitializeFoods(3);*/
+            
             break;
         case 1: // Medium
             timer = 60.0f;
             cellCount = 25;
-            InitializeFoods(5);
+            /*InitializeFoods(5);*/
             break;
         case 2: // Hard
             timer = 80.0f;
             cellCount = 35;
-            InitializeFoods(7);
+            /*InitializeFoods(7);*/
             break;
         default:
-            0;
+            1;
             break;
         }
         maze = Maze();
@@ -676,6 +790,7 @@ int main()
 
         BeginDrawing(); // Begin drawing
 
+
         if (eventTriggered(0.2, lastUpdateTime))
         {
             game.Update();
@@ -691,22 +806,22 @@ int main()
         }
 
         // Controls for snake
-        if (IsKeyPressed(KEY_UP) && game.snake.direction.y != 1 && game.timer > 0)
+        if (IsKeyPressed(KEY_W) && game.snake.direction.y != 1 && game.timer > 0)
         {
             game.snake.direction = { 0, -1 };
             game.running = true;
         }
-        if (IsKeyPressed(KEY_DOWN) && game.snake.direction.y != -1 && game.timer > 0)
+        if (IsKeyPressed(KEY_S) && game.snake.direction.y != -1 && game.timer > 0)
         {
             game.snake.direction = { 0, 1 };
             game.running = true;
         }
-        if (IsKeyPressed(KEY_LEFT) && game.snake.direction.x != 1 && game.timer > 0)
+        if (IsKeyPressed(KEY_A) && game.snake.direction.x != 1 && game.timer > 0)
         {
             game.snake.direction = { -1, 0 };
             game.running = true;
         }
-        if (IsKeyPressed(KEY_RIGHT) && game.snake.direction.x != -1 && game.timer > 0)
+        if (IsKeyPressed(KEY_D) && game.snake.direction.x != -1 && game.timer > 0)
         {
             game.snake.direction = { 1, 0 };
             game.running = true;
@@ -734,7 +849,7 @@ int main()
         DrawRectangleLinesEx(Rectangle{ (float)offset - 5, (float)offset - 5, (float)cellSize * cellCount + 10, (float)cellSize * cellCount + 10 }, 5, darkGreen);
         DrawText("Mystery Maze", offset - 5, 20, 40, darkGreen);
         DrawText(TextFormat("%i", game.score), offset - 5, offset + cellSize * cellCount + 10, 40, darkGreen);
-        DrawText(TextFormat("Level: %d", game.level), offset + 610, offset + cellSize * cellCount + 10, 40, darkGreen);
+        /*DrawText(TextFormat("Level: %d", game.level), offset + 610, offset + cellSize * cellCount + 10, 40, darkGreen);*/
         game.Draw();
 
         EndDrawing();

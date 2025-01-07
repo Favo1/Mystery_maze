@@ -1,26 +1,24 @@
-﻿  Source.cpp
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(108,23): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(148,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (x64\Release\) contains files shared from another project (Maze V1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Source.cpp
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(109,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(149,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(153,24): warning C4244: 'argument': conversion from 'float' to 'const unsigned __int64', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(153,35): warning C4244: 'argument': conversion from 'float' to 'unsigned __int64', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(182,71): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(182,34): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(183,69): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(183,34): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(271,69): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(271,37): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(276,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(277,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(316,69): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(316,37): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(345,69): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(345,37): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(350,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(351,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(150,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(154,24): warning C4244: 'argument': conversion from 'float' to 'const unsigned __int64', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(154,35): warning C4244: 'argument': conversion from 'float' to 'unsigned __int64', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(175,67): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(175,30): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(176,65): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(176,30): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(250,69): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(250,37): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(255,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(256,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(312,69): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(312,37): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(317,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\goluw\Documents\GitHub\Mystery_maze\Maze V1\Source.cpp(318,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
   Generating code
-  67 of 494 functions (13.6%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    23 functions had inline decision re-evaluated but remain unchanged
+  Previous IPDB not found, fall back to full compilation.
+  All 626 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
-  Maze V1.vcxproj -> C:\Users\goluw\Documents\GitHub\Mystery_maze\x64\Release\Maze V1.exe
+  Maze V1.vcxproj -> C:\Users\goluw\Documents\GitHub\Mystery_maze\x64\Release\MysteryMaze.exe
