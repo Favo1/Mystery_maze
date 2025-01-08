@@ -34,14 +34,14 @@ Step-by-Step Logic:
 •	Down: (0, 1)
 •	Left: (-1, 0)
 •	Right: (1, 0) These directions are shuffled randomly using std::shuffle to introduce randomness in the maze structure.
+
 3.	Visit Neighbours:
 Move 2 steps in a chosen direction (nx, ny = x + dir.x * 2, y + dir.y * 2).
 If (nx, ny) is within bounds and still a wall (grid[ny][nx] == true), carve a passage:
 •	Remove the wall between the current cell (x, y) and (nx, ny) by marking the intermediate cell grid[y + dir.y][x + dir.x] = false.
 •	Recursively call GenerateMazeDFS(nx, ny) to explore the new cell.
-4.	The recursion ends when all neighbours have been visited.
- 
 
+4.	The recursion ends when all neighbours have been visited.
 Backtracking:
 •	If there are no valid moves, backtrack by popping the stack.
 •	Continue until all cells are visited.

@@ -93,7 +93,7 @@ class Maze
 {
 public:
     vector<Rectangle> walls;
-    vector<vector<bool>> grid; //2D grid to store wall (true = wall, fasle = free)
+    vector<vector<bool>> grid; //2D grid to store wall (true = wall, false = free)
 
     //Set start & end destinations for maze
     Vector2 startPosition = { 0, 0 }; // Top-Left corner
